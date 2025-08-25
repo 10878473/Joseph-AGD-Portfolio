@@ -4,6 +4,7 @@ public class Instantiator : MonoBehaviour
 {
     public GameObject prefab; // Assign in the Inspector
 
+    
     // Call this method to instantiate the prefab
     public void MakeInstance()
     {
@@ -16,4 +17,5 @@ public class Instantiator : MonoBehaviour
             Debug.LogWarning("Prefab is not assigned.");
         }
     }
+    
 }
