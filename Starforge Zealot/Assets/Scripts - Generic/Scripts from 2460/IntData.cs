@@ -52,4 +52,13 @@ public class IntData : ScriptableObject
     {
         value = defaultValue;
     }
+
+    public void SetDefault(int defaultValue)
+    {
+        this.defaultValue = defaultValue;
+    }
+    public void AddDefaultValue(int defaultValue)
+    {
+        value += defaultValue;
+    }
 }

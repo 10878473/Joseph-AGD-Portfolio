@@ -22,7 +22,7 @@ public class RotateTowardsMovement : MonoBehaviour
     void Update()
     {
         // --- Get movement direction ---
-        Vector3 velocity = shipRigidbody ? shipRigidbody.velocity : Vector3.zero;
+        Vector3 velocity = shipRigidbody ? shipRigidbody.linearVelocity : Vector3.zero;
 
         // If no rigidbody given, estimate velocity from position change
         if (!shipRigidbody && transform.parent != null)
