@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4521267039957661699}
   - component: {fileID: 8473917149621078439}
   - component: {fileID: 9053310766913734533}
+  - component: {fileID: -8621898674945486504}
+  - component: {fileID: -7472468508270626265}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -123,4 +125,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6128277ce45982a4da9da6bb935f848c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 3
+  lifetime: 12
+--- !u!114 &-8621898674945486504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135953621356633597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71eb1d1baf28c7448aeaf5c9298dffb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  pointactual: {x: 0, y: 0, z: 0}
+  offset: {x: 10, y: 0, z: 10}
+--- !u!114 &-7472468508270626265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135953621356633597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c0cebe40d74004fb175e57dbfe6175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialVelocity: {x: 0, y: 0, z: 30}
+  useLocalSpace: 1
+  useAcceleration: 0
+  accelerationRate: 1
+  decelerationRate: 1
+  maxVelocity: {x: 100, y: 100, z: 100}
+  boomerang: 1
+  onStopEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  moveOnStart: 1
+  moveAfterDelay: 0
+  delaySeconds: 1
+  isMoving: 0
+  currentVelocity: {x: 0, y: 0, z: 0}
