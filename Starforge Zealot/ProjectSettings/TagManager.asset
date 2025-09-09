@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - todopanel
+  - Gate
   layers:
   - Default
   - TransparentFX
