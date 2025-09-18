@@ -1,23 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 public class SpawnManager : MonoBehaviour
 {
     [Header("Spawn Zones")]
     public List<GameObject> SpawningZones;
 
-    [Header("Objects from list")]
+    [Header("Objects from list (A=first, B=second, etc.)")]
     public List<GameObject> testPrefabs;
-    public bool spawnInSequence = false; // if false, pick randomly
-    private int prefabIndex = 0;
 
-    [Header("Wave formatting: # of spawns - # of spawns. Example : 1-2-3-4-7-12-18")]
-    public string waveData = "1-2-3-4-7-12-18";
+    [Header("Wave formatting: Example : \"4A+4B@5-5A+10B@2-6A+12B\"")]
+    public string waveData = "4A+4B@5-5A+10B@2-6A+12B";
     public float waveDelay = 3f;
     public float waveDelayVariation = 1f;
 
-    private List<int> parsedWaves = new List<int>();
+    private List<Wave> parsedWaves = new List<Wave>();
     private int waveIndex = 0;
 
     void Start()
@@ -29,17 +28,58 @@ public class SpawnManager : MonoBehaviour
     private void ParseWaveData()
     {
         parsedWaves.Clear();
-        string[] parts = waveData.Split('-');
 
-        foreach (string part in parts)
+        // Split waves by '-'
+        string[] waveParts = waveData.Split('-');
+
+        foreach (string waveStr in waveParts)
         {
-            if (int.TryParse(part, out int count))
+            if (string.IsNullOrWhiteSpace(waveStr)) continue;
+
+            float customDelay = -1f;
+            string[] delaySplit = waveStr.Split('@');
+
+            string instructionsPart = delaySplit[0];
+            if (delaySplit.Length > 1 && float.TryParse(delaySplit[1], out float parsedDelay))
             {
-                parsedWaves.Add(count);
+                customDelay = parsedDelay;
             }
-            else
+
+            List<WaveInstruction> instructions = new List<WaveInstruction>();
+            string[] groups = instructionsPart.Split('+');
+
+            foreach (string group in groups)
             {
-                Debug.LogWarning($"Invalid wave number: {part}");
+                Match m = Regex.Match(group.Trim(), @"(\d+)([A-Z&])", RegexOptions.IgnoreCase);
+
+                if (m.Success)
+                {
+                    int count = int.Parse(m.Groups[1].Value);
+                    char code = char.ToUpper(m.Groups[2].Value[0]);
+
+                    int prefabIndex = -1;
+                    bool random = false;
+
+                    if (code == '&')
+                    {
+                        random = true;
+                    }
+                    else
+                    {
+                        prefabIndex = code - 'A'; // A=0, B=1, etc.
+                    }
+
+                    instructions.Add(new WaveInstruction(count, prefabIndex, random));
+                }
+                else if (!string.IsNullOrWhiteSpace(group))
+                {
+                    Debug.LogWarning($"Invalid spawn group: {group}");
+                }
+            }
+
+            if (instructions.Count > 0)
+            {
+                parsedWaves.Add(new Wave(instructions, customDelay));
             }
         }
     }
@@ -48,38 +88,56 @@ public class SpawnManager : MonoBehaviour
     {
         while (waveIndex < parsedWaves.Count)
         {
-            int spawnCount = parsedWaves[waveIndex];
-            Debug.Log($"Starting Wave {waveIndex + 1} with {spawnCount} spawns");
+            Wave wave = parsedWaves[waveIndex];
+            Debug.Log($"Starting Wave {waveIndex + 1}");
 
-            for (int i = 0; i < spawnCount; i++)
+            foreach (WaveInstruction inst in wave.instructions)
             {
-                GameObject prefabToSpawn = GetNextPrefab();
-                SpawnObject(prefabToSpawn);
+                for (int i = 0; i < inst.count; i++)
+                {
+                    GameObject prefab = GetPrefab(inst);
+                    SpawnObject(prefab);
+                }
             }
 
             waveIndex++;
 
-            // Wait for delay + variation
-            float delay = waveDelay + Random.Range(-waveDelayVariation, waveDelayVariation);
+            // Decide delay: use custom delay if defined, else global delay
+            float delay;
+            if (wave.customDelay >= 0)
+            {
+                delay = wave.customDelay;
+            }
+            else
+            {
+                delay = waveDelay + Random.Range(-waveDelayVariation, waveDelayVariation);
+            }
+
             yield return new WaitForSeconds(delay);
         }
 
         Debug.Log("All waves finished!");
     }
 
-    private GameObject GetNextPrefab()
+    private GameObject GetPrefab(WaveInstruction inst)
     {
         if (testPrefabs.Count == 0) return null;
 
-        if (spawnInSequence)
+        if (inst.random)
         {
-            GameObject prefab = testPrefabs[prefabIndex];
-            prefabIndex = (prefabIndex + 1) % testPrefabs.Count; // loop back around
-            return prefab;
+            return testPrefabs[Random.Range(0, testPrefabs.Count)];
         }
         else
         {
-            return testPrefabs[Random.Range(0, testPrefabs.Count)];
+            if (inst.prefabIndex >= 0 && inst.prefabIndex < testPrefabs.Count)
+            {
+                return testPrefabs[inst.prefabIndex];
+            }
+            else
+            {
+                Debug.LogWarning($"Invalid prefab index {inst.prefabIndex}");
+                return null;
+            }
         }
     }
 
@@ -106,5 +164,31 @@ public class SpawnManager : MonoBehaviour
 
         // instantiate prefab
         Instantiate(prefab, spawnPos, Quaternion.identity);
+    }
+}
+
+public class Wave
+{
+    public List<WaveInstruction> instructions;
+    public float customDelay;
+
+    public Wave(List<WaveInstruction> instructions, float customDelay)
+    {
+        this.instructions = instructions;
+        this.customDelay = customDelay;
+    }
+}
+
+public class WaveInstruction
+{
+    public int count;
+    public int prefabIndex;
+    public bool random;
+
+    public WaveInstruction(int count, int prefabIndex, bool random)
+    {
+        this.count = count;
+        this.prefabIndex = prefabIndex;
+        this.random = random;
     }
 }

@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c0cebe40d74004fb175e57dbfe6175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialVelocity: {x: 40, y: 0, z: 0}
+  initialVelocity: {x: 80, y: 0, z: 0}
   useLocalSpace: 0
   useAcceleration: 0
   accelerationRate: 80
