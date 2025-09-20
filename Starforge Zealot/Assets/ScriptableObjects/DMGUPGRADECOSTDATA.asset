@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca5af48702e435248b9a36e0e287108f, type: 3}
-  m_Name: HPDATA
+  m_Name: DMGUPGRADECOSTDATA
   m_EditorClassIdentifier: 
-  value: 30
-  defaultValue: 50
+  value: 10
+  defaultValue: 10
