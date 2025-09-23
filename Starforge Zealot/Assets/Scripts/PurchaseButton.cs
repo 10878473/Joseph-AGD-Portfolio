@@ -43,10 +43,11 @@ public class PurchaseButton : MonoBehaviour
         if (currency == null || price == null) return;
 
         // Enable/disable button if affordable
-        bool affordable = currency.value >= price.value
-
-;
-        button.interactable = affordable;
+        bool affordable = currency.value >= price.value;
+        if (button.interactable)
+        {
+            button.interactable = affordable;
+        }
     }
 
     private void OnPurchase()

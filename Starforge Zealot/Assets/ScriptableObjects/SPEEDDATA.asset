@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5af48702e435248b9a36e0e287108f, type: 3}
   m_Name: SPEEDDATA
   m_EditorClassIdentifier: 
-  value: 0
-  defaultValue: 0
+  value: 15
+  defaultValue: 15
