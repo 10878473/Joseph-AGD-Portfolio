@@ -129,6 +129,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 5
+  beforeDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5256498005418310388
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,4 +314,4 @@ MonoBehaviour:
   CollisionEvent:
     m_PersistentCalls:
       m_Calls: []
-  doDebug: 1
+  doDebug: 0

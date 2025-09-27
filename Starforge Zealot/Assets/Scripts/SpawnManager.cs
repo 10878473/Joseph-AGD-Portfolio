@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
+using UnityEngine.Events;
 
 public class SpawnManager : MonoBehaviour
 {
+    
     [Header("Spawn Zones")]
     public List<GameObject> SpawningZones;
 
@@ -18,9 +20,12 @@ public class SpawnManager : MonoBehaviour
 
     private List<Wave> parsedWaves = new List<Wave>();
     private int waveIndex = 0;
-
+    
+    public bool finished = false;
+    public UnityEvent finishEvent;
     void Start()
     {
+        finished = false;
         ParseWaveData();
         StartCoroutine(WaveCoroutine());
     }
@@ -117,6 +122,9 @@ public class SpawnManager : MonoBehaviour
         }
 
         Debug.Log("All waves finished!");
+        finished = true;
+        finishEvent?.Invoke();
+        
     }
 
     private GameObject GetPrefab(WaveInstruction inst)

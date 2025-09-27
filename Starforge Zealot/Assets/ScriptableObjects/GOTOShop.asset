@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca5af48702e435248b9a36e0e287108f, type: 3}
-  m_Name: DMGDATA
+  m_Script: {fileID: 11500000, guid: 0fa68a29b5cf4d842ad1aa85e607c251, type: 3}
+  m_Name: GOTOShop
   m_EditorClassIdentifier: 
-  value: 2
-  defaultValue: 1

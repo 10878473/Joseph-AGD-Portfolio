@@ -5,39 +5,38 @@ using UnityEngine.Events;
 
 public class EnemyHurtBehavior : MonoBehaviour
 {
-    //When ishurt is called, it will check iframes, lower hp, and destroy itself
     public int hp;
-
     public IntData playerdamage;
 
     public UnityEvent destroyevent, hurtevent;
 
     public float Iframes = 0.1f;
-
     private WaitForSeconds wfsIframe;
-
     private bool canHurt;
     private bool damageticking = false;
+    private bool isDead = false;  // NEW
 
     public GameObject parent;
-
     public GameObject sparksPrefab;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         canHurt = true;
         wfsIframe = new WaitForSeconds(Iframes);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(!canHurt){return;}
-        if(damageticking){gotHit();}
+        if (!canHurt || isDead) return;
+
+        if (damageticking)
+            ApplyDamage();  // cleaner name
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (isDead) return;
+
         if (other.gameObject.CompareTag("DOT"))
         {
             Debug.Log(other.gameObject.name + " Triggered DOT effect");
@@ -45,7 +44,7 @@ public class EnemyHurtBehavior : MonoBehaviour
         }
         else
         {
-            gotHit();
+            ApplyDamage();
         }
     }
 
@@ -58,39 +57,35 @@ public class EnemyHurtBehavior : MonoBehaviour
         }
     }
 
-    public void gotHit()
+    public void ApplyDamage()
     {
-        if (canHurt)
-        {
-            hp -= playerdamage.value;
-            Instantiate(sparksPrefab, transform.position, Quaternion.identity);
-            StartCoroutine("IframesCO");
-            hurtevent?.Invoke();
-            canHurt = false;
-        }
+        if (!canHurt || isDead) return;
+
+        hp -= playerdamage.value;
+        Instantiate(sparksPrefab, transform.position, Quaternion.identity);
+        StartCoroutine(IframesCO());
+        hurtevent?.Invoke();
+        canHurt = false;
+
         if (hp <= 0)
         {
-            destroyevent?.Invoke();
-            Destroy(parent);
+            Kill();
         }
-        
     }
 
-    public void damageON()
+    private void Kill()
     {
-        //continuously tick damage on target when they are touching a damage source, ex. player drill.
-        damageticking = true;
+        if (isDead) return; // prevents double death
+        isDead = true;
+
+        destroyevent?.Invoke();
+        Debug.Log($"Gameobject {gameObject.name} has been destroyed at time {Time.time}");
+        Destroy(parent);
     }
-    
-    public void damageOFF()
-    {
-        //continuously tick damage on target when they are touching a damage source, ex. player drill.
-        damageticking = false;
-    }
+
     private IEnumerator IframesCO()
     {
         yield return wfsIframe;
         canHurt = true;
     }
-    
 }
