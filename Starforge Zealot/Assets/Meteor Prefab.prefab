@@ -152,7 +152,19 @@ MonoBehaviour:
         m_CallState: 2
   hurtevent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5262471355835964301}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   Iframes: 0.1
   parent: {fileID: 4579264066337458372}
   sparksPrefab: {fileID: 360874275390231167, guid: f8c2e93117f847e45814369fa3df69d9, type: 3}
@@ -271,6 +283,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 30
+  beforeDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5028331263259086704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &507609212586266954
 RectTransform:
   m_ObjectHideFlags: 0
@@ -458,7 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5245282, g: 0.25632605, b: 0.25632605, a: 1}
+  m_Color: {r: 0.24528301, g: 0.22353148, b: 0.22353148, a: 0.6117647}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
