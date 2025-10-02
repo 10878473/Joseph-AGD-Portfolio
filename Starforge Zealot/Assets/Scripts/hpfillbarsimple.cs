@@ -8,6 +8,7 @@ public class hpfillbarsimple : MonoBehaviour
     public IntData refData;
     public int maxValue;
     public Image hpbar;
+    public bool DebugMode = false;
     private float fillingamount;
     private void Start()
     {
@@ -19,7 +20,9 @@ public class hpfillbarsimple : MonoBehaviour
     {
         
         fillingamount = (float)refData.value / maxValue;
-        Debug.Log($"Health is at  {fillingamount}%. HP: {refData.value}/{maxValue}%");
+        if (DebugMode == true){
+            Debug.Log($"Health is at  {fillingamount}%. HP: {refData.value}/{maxValue}%");
+        }
         hpbar.fillAmount = fillingamount;
         
     }

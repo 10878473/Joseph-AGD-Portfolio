@@ -22,12 +22,14 @@ public class SpawnManager : MonoBehaviour
     private int waveIndex = 0;
     
     public bool finished = false;
-    public UnityEvent finishEvent;
+    public UnityEvent finishEvent, waveAdvanceEvent;
+    public IntData WaveNum;
     void Start()
     {
         finished = false;
         ParseWaveData();
         StartCoroutine(WaveCoroutine());
+        WaveNum.value = 0;
     }
 
     private void ParseWaveData()
@@ -104,9 +106,9 @@ public class SpawnManager : MonoBehaviour
                     SpawnObject(prefab);
                 }
             }
-
+            
             waveIndex++;
-
+            
             // Decide delay: use custom delay if defined, else global delay
             float delay;
             if (wave.customDelay >= 0)
@@ -119,6 +121,8 @@ public class SpawnManager : MonoBehaviour
             }
 
             yield return new WaitForSeconds(delay);
+            WaveNum.value++;
+            waveAdvanceEvent?.Invoke();
         }
 
         Debug.Log("All waves finished!");
