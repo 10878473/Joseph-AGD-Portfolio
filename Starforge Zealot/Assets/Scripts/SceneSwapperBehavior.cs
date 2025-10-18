@@ -9,7 +9,12 @@ public class SceneSwapperBehavior : MonoBehaviour
     [Header("Scene Settings")]
     public SceneList targetScene;
 
-    
+    public IntData SceneIndex;
+
+    public void SwapSceneIndex()
+    {
+        SceneManager.LoadScene(SceneIndex.value);
+    }
     public void SwapScene()
     {
         string sceneName = targetScene.ToString();

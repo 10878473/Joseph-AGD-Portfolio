@@ -44,6 +44,7 @@ public class DataStorage : ScriptableObject
         PlayerPrefs.DeleteAll();
     }
     
+    
     //save variables from a gameObject
     public void SaveDataFromGameObject(GameObject obj)
     {
@@ -60,5 +61,21 @@ public class DataStorage : ScriptableObject
         if (data == null) return;
         data.LoadAllData();
     }
+    public bool HasSavedData()
+    {
+        // Check if the main data exists
+        if (data != null && PlayerPrefs.HasKey(data.name))
+            return true;
+
+        // Check if any list data exists
+        foreach (var obj in listData)
+        {
+            if (obj != null && PlayerPrefs.HasKey(obj.name))
+                return true;
+        }
+
+        return false;
+    }
+
     
 }
