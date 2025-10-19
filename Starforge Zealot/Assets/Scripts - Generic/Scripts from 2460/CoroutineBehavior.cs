@@ -34,7 +34,7 @@ public class CoroutineBehavior : MonoBehaviour
         counterNum = counterOrigina;
         wfuObj = new WaitForFixedUpdate();
         startCountEvent.Invoke();
-        Debug.Log("Start from Coroutine script ran");
+        //Debug.Log("Start from Coroutine script ran");
         yield return wfsObj;
 
         while (counterNum > 0)
