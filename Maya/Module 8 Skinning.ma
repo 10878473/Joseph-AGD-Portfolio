@@ -1,6 +1,6 @@
 //Maya ASCII 2022 scene
-//Name: Module 7 Twist joints.ma
-//Last modified: Sun, Nov 02, 2025 10:43:39 AM
+//Name: Module 8 Skinning.ma
+//Last modified: Sun, Nov 02, 2025 10:43:57 AM
 //Codeset: 1252
 requires maya "2022";
 requires "stereoCamera" "10.0";
@@ -12,11 +12,11 @@ fileInfo "product" "Maya 2022";
 fileInfo "version" "2022";
 fileInfo "cutIdentifier" "202102181415-29bfc1879c";
 fileInfo "osv" "Windows 10 Home v2009 (Build: 26100)";
-fileInfo "UUID" "00DB5CC8-4493-2D74-EFEF-3996A5DB5C4A";
+fileInfo "UUID" "36A5C7E6-44F2-2778-3AC2-EC8369EBEF80";
 createNode transform -s -n "persp";
 	rename -uid "51435D60-430D-67B2-FBCE-EDB1237C1497";
-	setAttr ".t" -type "double3" 1835.6655743413112 1473.5185822376829 2583.0323938464971 ;
-	setAttr ".r" -type "double3" -24.938352710910326 -1404.5999999999799 1.9509546221654455e-15 ;
+	setAttr ".t" -type "double3" 351.09531884757757 573.76432249569052 1148.3810429884772 ;
+	setAttr ".r" -type "double3" -25.538352710910335 -1422.999999999977 0 ;
 	setAttr ".rp" -type "double3" 0 -1.1368683772161603e-13 -2.8421709430404007e-14 ;
 	setAttr ".rpt" -type "double3" -6.5495708170602928e-15 -1.581867200052826e-15 -2.8671167079727411e-14 ;
 createNode camera -s -n "perspShape" -p "persp";
@@ -25,7 +25,7 @@ createNode camera -s -n "perspShape" -p "persp";
 	setAttr ".fl" 34.999999999999993;
 	setAttr ".ncp" 1;
 	setAttr ".fcp" 100000;
-	setAttr ".coi" 3494.7076359377952;
+	setAttr ".coi" 1330.8840823230696;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -105289,4 +105289,4 @@ connectAttr "base_color_texture_ncl1_1.msg" ":defaultTextureList1.tx" -na;
 connectAttr "base_color_texture_ncl1_2.msg" ":defaultTextureList1.tx" -na;
 connectAttr "ikRPsolver.msg" ":ikSystem.sol" -na;
 connectAttr "ikSCsolver.msg" ":ikSystem.sol" -na;
-// End of Module 7 Twist joints.ma
+// End of Module 8 Skinning.ma
